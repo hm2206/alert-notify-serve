@@ -4,8 +4,10 @@ import { FindUserService } from './application/find-user.service';
 import { CreateUserService } from './application/create-user.service';
 import { PaginateUserService } from './application/paginate-user.service';
 import { EditUserService } from './application/edit-user.service';
+import { PermissionModule } from 'src/permissions/permission.module';
 
 @Module({
+  imports: [PermissionModule],
   providers: [
     FindUserService,
     CreateUserService,

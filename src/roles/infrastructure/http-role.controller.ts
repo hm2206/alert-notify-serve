@@ -16,6 +16,12 @@ import { ApiTags } from '@nestjs/swagger';
 import { CreateRoleDto } from './dtos/create-role.dto';
 import { EditRoleDto } from './dtos/edit-role.dto';
 import { JwtAuthGuard } from 'src/auth/infrastruture/guards/jwt-auth.guard';
+import { CaslGuard } from 'src/permissions/infrastructure/guards/casl.guard';
+import { CaslAction } from 'src/permissions/infrastructure/decoratos/casl-action.decorator';
+import {
+  PermissionEntityEnum,
+  PermissionModeEnum,
+} from 'src/permissions/domain/permission.enum';
 
 @ApiTags('Rol')
 @Controller('roles')
@@ -28,25 +34,41 @@ export class HttpRoleController {
   ) {}
 
   @Get()
-  @UseGuards(JwtAuthGuard)
+  @UseGuards(JwtAuthGuard, CaslGuard)
+  @CaslAction({
+    entity: PermissionEntityEnum.RoleEntity,
+    action: PermissionModeEnum.READ,
+  })
   async index() {
     return this.paginateRoleService.execute();
   }
 
   @Post()
-  @UseGuards(JwtAuthGuard)
+  @UseGuards(JwtAuthGuard, CaslGuard)
+  @CaslAction({
+    entity: PermissionEntityEnum.RoleEntity,
+    action: PermissionModeEnum.CREATE,
+  })
   async store(@Body() request: CreateRoleDto) {
     return this.createRoleService.execute(request);
   }
 
   @Get(':id')
-  @UseGuards(JwtAuthGuard)
+  @UseGuards(JwtAuthGuard, CaslGuard)
+  @CaslAction({
+    entity: PermissionEntityEnum.RoleEntity,
+    action: PermissionModeEnum.READ,
+  })
   async show(@Param() request: FindRoleDto) {
     return this.findRoleService.execute(request);
   }
 
   @Put(':id')
-  @UseGuards(JwtAuthGuard)
+  @UseGuards(JwtAuthGuard, CaslGuard)
+  @CaslAction({
+    entity: PermissionEntityEnum.RoleEntity,
+    action: PermissionModeEnum.UPDATE,
+  })
   async update(@Param() params: FindRoleDto, @Body() payload: EditRoleDto) {
     return this.editRoleService.execute({ params, payload });
   }

@@ -35,6 +35,9 @@ export class CaslGuard implements CanActivate {
     // validar si es root
     if (isRoot) return true;
 
+    // validar entity
+    if (!subject?.entity) return false;
+
     // validar permisos
     const ability = await this.caslPermissionService.execute({
       auth,

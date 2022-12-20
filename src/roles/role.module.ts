@@ -4,8 +4,10 @@ import { CreateRoleService } from './application/create-role.service';
 import { FindRoleService } from './application/find-role.service';
 import { PaginateRoleService } from './application/paginate-role.service';
 import { EditRoleService } from './application/edit-role.service';
+import { PermissionModule } from 'src/permissions/permission.module';
 
 @Module({
+  imports: [PermissionModule],
   providers: [
     CreateRoleService,
     FindRoleService,
