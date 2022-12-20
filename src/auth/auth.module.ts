@@ -7,11 +7,13 @@ import { JwtModule } from '@nestjs/jwt';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import { GenerateTokenAuhtService } from './application/generate-token-auth.service';
 import { JwtStrategy } from './application/jwt.strategy';
+import { UserModule } from 'src/users/user.module';
 
 @Module({
   imports: [
     ConfigModule,
     PassportModule,
+    UserModule,
     JwtModule.registerAsync({
       useFactory: (config: ConfigService) => {
         return {

@@ -13,5 +13,11 @@ import { EditUserService } from './application/edit-user.service';
     EditUserService,
   ],
   controllers: [HttpUserController],
+  exports: [
+    FindUserService,
+    CreateUserService,
+    PaginateUserService,
+    EditUserService,
+  ],
 })
 export class UserModule {}
