@@ -9,8 +9,8 @@ import { FindVisitService } from '../application/find-visit.service';
 import { EditVisitService } from '../application/edit-visit.service';
 import { ClientOrm } from 'src/database/domain/client.orm';
 
-@ApiTags('Rol')
-@Controller('roles')
+@ApiTags('Visits')
+@Controller('visits')
 export class HttpVisitController {
   constructor(
     private paginateVisitService: PaginateVisitService,

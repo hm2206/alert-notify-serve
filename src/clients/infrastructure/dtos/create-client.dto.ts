@@ -1,5 +1,5 @@
 import { ApiProperty, ApiPropertyOptional } from '@nestjs/swagger';
-import { Transform } from 'class-transformer';
+import { Transform, Type } from 'class-transformer';
 import {
   IsDefined,
   IsDate,
@@ -9,8 +9,20 @@ import {
   IsString,
   MinLength,
   MaxLength,
+  ValidateNested,
 } from 'class-validator';
 import { CreateClientRequest } from 'src/clients/application/create-client.service';
+import { ClientInterface } from 'src/clients/domain/client.interface';
+import { CreateVisitRequest } from 'src/visits/application/create-visit.service';
+
+export class CreateClientToVisitDto implements CreateVisitRequest {
+  @ApiProperty()
+  @IsDefined()
+  @IsDate()
+  @Transform(({ value }) => new Date(value))
+  date: Date;
+  client: ClientInterface;
+}
 
 export class CreateClientDto implements CreateClientRequest {
   @ApiProperty()
@@ -47,4 +59,10 @@ export class CreateClientDto implements CreateClientRequest {
   @IsOptional()
   @IsPhoneNumber()
   phone?: string;
+
+  @ApiProperty()
+  @IsDefined()
+  @ValidateNested()
+  @Type(() => CreateClientToVisitDto)
+  visit: CreateClientToVisitDto;
 }

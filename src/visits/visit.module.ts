@@ -13,5 +13,11 @@ import { EditVisitService } from './application/edit-visit.service';
     EditVisitService,
   ],
   controllers: [HttpVisitController],
+  exports: [
+    PaginateVisitService,
+    CreateVisitService,
+    FindVisitService,
+    EditVisitService,
+  ],
 })
 export class VisitModule {}

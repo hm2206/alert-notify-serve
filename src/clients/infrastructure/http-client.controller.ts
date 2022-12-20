@@ -1,4 +1,12 @@
-import { Body, Controller, Get, Param, Post, Put } from '@nestjs/common';
+import {
+  Body,
+  Controller,
+  Get,
+  Inject,
+  Param,
+  Post,
+  Put,
+} from '@nestjs/common';
 import { PaginateClientService } from '../application/paginate-client.service';
 import { CreateClientService } from '../application/create-client.service';
 import { FindClientService } from '../application/find-client.service';
@@ -7,6 +15,8 @@ import { FindClientDto } from './dtos/find-client.dto';
 import { CreateClientDto } from './dtos/create-client.dto';
 import { EditClientDto } from './dtos/edit-client.dto';
 import { ApiTags } from '@nestjs/swagger';
+import { Sequelize } from 'sequelize';
+import { SEQUELIZE_SERVICE } from 'src/database/service/sequelize.service';
 
 @ApiTags('Clients')
 @Controller('clients')
@@ -16,6 +26,8 @@ export class HttpClientController {
     private createClientService: CreateClientService,
     private findClientService: FindClientService,
     private editClientService: EditClientService,
+    @Inject(SEQUELIZE_SERVICE)
+    private connection: Sequelize,
   ) {}
 
   @Get()
@@ -25,7 +37,18 @@ export class HttpClientController {
 
   @Post()
   async store(@Body() request: CreateClientDto) {
-    return this.createClientService.execute(request);
+    const transaction = await this.connection.transaction();
+    try {
+      const client = await this.createClientService.execute(
+        request,
+        transaction,
+      );
+      transaction.commit();
+      return client;
+    } catch (error) {
+      transaction.rollback();
+      throw error;
+    }
   }
 
   @Get(':id')

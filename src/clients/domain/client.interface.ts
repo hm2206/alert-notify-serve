@@ -1,3 +1,5 @@
+import { VisitInterface } from 'src/visits/domain/visit.interface';
+
 export interface ClientInterface {
   id: string;
   name: string;
@@ -6,4 +8,5 @@ export interface ClientInterface {
   email: string;
   dateOfBirth: Date;
   phone?: string;
+  visits: VisitInterface[];
 }

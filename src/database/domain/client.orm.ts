@@ -4,10 +4,13 @@ import {
   AllowNull,
   Column,
   DataType,
+  HasMany,
   Model,
   Table,
 } from 'sequelize-typescript';
 import { ClientInterface } from 'src/clients/domain/client.interface';
+import { VisitInterface } from 'src/visits/domain/visit.interface';
+import { VisitOrm } from './visit.orm';
 
 @Table({ modelName: 'clients' })
 export class ClientOrm
@@ -41,4 +44,7 @@ export class ClientOrm
 
   @Column({ type: DataType.STRING(20) })
   phone?: string;
+
+  @HasMany(() => VisitOrm, { onDelete: 'cascade' })
+  visits: VisitInterface[] = [];
 }
