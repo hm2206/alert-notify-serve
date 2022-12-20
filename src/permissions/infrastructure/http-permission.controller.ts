@@ -6,7 +6,9 @@ import { EditPermissionService } from '../application/edit-permission.service';
 import { FindPermissionDto } from './dtos/find-permission.dto';
 import { CreatePermissionDto } from './dtos/create-permission.dto';
 import { EditPermissionDto } from './dtos/edit-permission.dto';
+import { ApiTags } from '@nestjs/swagger';
 
+@ApiTags('Permissions')
 @Controller('permissions')
 export class HttpPermissionController {
   constructor(

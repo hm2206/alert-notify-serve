@@ -10,7 +10,9 @@ import {
   EditRolePayload,
   EditRoleService,
 } from '../application/edit-role.service';
+import { ApiTags } from '@nestjs/swagger';
 
+@ApiTags('Rol')
 @Controller('roles')
 export class HttpRoleController {
   constructor(

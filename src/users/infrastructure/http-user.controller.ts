@@ -8,7 +8,9 @@ import {
   EditUserPayload,
   EditUserService,
 } from '../application/edit-user.service';
+import { ApiTags } from '@nestjs/swagger';
 
+@ApiTags('Users')
 @Controller('users')
 export class HttpUserController {
   constructor(
