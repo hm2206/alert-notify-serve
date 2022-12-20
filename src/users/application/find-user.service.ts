@@ -8,6 +8,7 @@ export class FindUserService {
       where: {
         id: request.id,
       },
+      include: ['role'],
     });
   }
 }

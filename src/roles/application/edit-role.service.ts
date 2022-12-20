@@ -15,6 +15,7 @@ export class EditRoleService {
 
 export interface EditRolePayload {
   name: string;
+  isRoot: boolean;
 }
 
 export interface EditRoleRequest {

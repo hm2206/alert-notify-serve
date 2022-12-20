@@ -4,6 +4,8 @@ import { UserOrm } from 'src/database/domain/user.orm';
 @Injectable()
 export class PaginateUserService {
   async execute() {
-    return UserOrm.findAll();
+    return UserOrm.findAll({
+      include: ['role'],
+    });
   }
 }

@@ -10,6 +10,7 @@ export class GenerateTokenAuhtService {
     const payload = {
       username: user.username,
       sub: user.id,
+      roleId: user.roleId,
     };
 
     return {

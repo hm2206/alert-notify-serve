@@ -14,4 +14,5 @@ export class CreateRoleService {
 
 export interface CreateRoleRequest {
   name: string;
+  isRoot: boolean;
 }

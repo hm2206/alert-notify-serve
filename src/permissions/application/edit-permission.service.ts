@@ -5,7 +5,6 @@ import {
   PermissionEntityEnum,
   PermissionModeEnum,
 } from '../domain/permission.enum';
-import { TermsValues } from '../domain/value-objects/terms.values';
 
 @Injectable()
 export class EditPermissionService {
@@ -22,7 +21,7 @@ export class EditPermissionService {
 export interface EditPermissionPayload {
   entity: PermissionEntityEnum;
   mode: PermissionModeEnum;
-  terms: TermsValues;
+  roleId: string;
 }
 
 export interface EditPermissionRequest {
