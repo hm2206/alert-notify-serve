@@ -6,6 +6,7 @@ import { UserModule } from './users/user.module';
 import { PermissionModule } from './permissions/permission.module';
 import { ClientModule } from './clients/client.module';
 import { VisitModule } from './visits/visit.module';
+import { AuthModule } from './auth/auth.module';
 @Module({
   imports: [
     ConfigModule.forRoot({
@@ -18,6 +19,7 @@ import { VisitModule } from './visits/visit.module';
     PermissionModule,
     ClientModule,
     VisitModule,
+    AuthModule,
   ],
   controllers: [],
   providers: [],

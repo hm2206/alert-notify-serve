@@ -6,6 +6,7 @@ import {
   Param,
   Post,
   Put,
+  UseGuards,
 } from '@nestjs/common';
 import { PaginateClientService } from '../application/paginate-client.service';
 import { CreateClientService } from '../application/create-client.service';
@@ -17,6 +18,7 @@ import { EditClientDto } from './dtos/edit-client.dto';
 import { ApiTags } from '@nestjs/swagger';
 import { Sequelize } from 'sequelize';
 import { SEQUELIZE_SERVICE } from 'src/database/service/sequelize.service';
+import { JwtAuthGuard } from 'src/auth/infrastruture/guards/jwt-auth.guard';
 
 @ApiTags('Clients')
 @Controller('clients')
@@ -31,11 +33,13 @@ export class HttpClientController {
   ) {}
 
   @Get()
+  @UseGuards(JwtAuthGuard)
   async index() {
     return this.paginateClientService.execute();
   }
 
   @Post()
+  @UseGuards(JwtAuthGuard)
   async store(@Body() request: CreateClientDto) {
     const transaction = await this.connection.transaction();
     try {
@@ -52,11 +56,13 @@ export class HttpClientController {
   }
 
   @Get(':id')
+  @UseGuards(JwtAuthGuard)
   async show(@Param() request: FindClientDto) {
     return this.findClientService.execute(request);
   }
 
   @Put(':id')
+  @UseGuards(JwtAuthGuard)
   async update(@Param() params: FindClientDto, @Body() payload: EditClientDto) {
     return this.editClientService.execute({ params, payload });
   }

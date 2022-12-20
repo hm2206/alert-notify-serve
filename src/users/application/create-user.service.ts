@@ -6,11 +6,12 @@ import { PasswordUserValue } from '../domain/value-objects/password-user.value';
 @Injectable()
 export class CreateUserService {
   async execute(request: CreateUserRequest) {
+    const password = new PasswordUserValue(request.password);
     return UserOrm.create({
       id: uuid(),
       username: request.username,
       email: request.email,
-      password: await new PasswordUserValue(request.password).generate(),
+      password: await password.generate(),
       roleId: request.roleId,
     });
   }
