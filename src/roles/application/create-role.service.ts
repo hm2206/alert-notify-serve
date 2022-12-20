@@ -5,7 +5,7 @@ import { uuid } from 'uuidv4';
 @Injectable()
 export class CreateRoleService {
   async execute(request: CreateRoleRequest) {
-    return await RoleOrm.create({
+    return RoleOrm.create({
       id: uuid(),
       name: request.name,
     });

@@ -1,4 +1,4 @@
-import { Body, Controller, Get, Param, Post } from '@nestjs/common';
+import { Body, Controller, Get, Param, Post, Put } from '@nestjs/common';
 import {
   CreateRoleRequest,
   CreateRoleService,
@@ -6,6 +6,10 @@ import {
 import { FindRoleService } from '../application/find-role.service';
 import { PaginateRoleService } from '../application/paginate-role.service';
 import { FindRoleDto } from './dtos/find-role.dto';
+import {
+  EditRolePayload,
+  EditRoleService,
+} from '../application/edit-role.service';
 
 @Controller('roles')
 export class HttpRoleController {
@@ -13,6 +17,7 @@ export class HttpRoleController {
     private paginateRoleService: PaginateRoleService,
     private createRoleService: CreateRoleService,
     private findRoleService: FindRoleService,
+    private editRoleService: EditRoleService,
   ) {}
 
   @Get()
@@ -28,5 +33,10 @@ export class HttpRoleController {
   @Get(':id')
   async show(@Param() request: FindRoleDto) {
     return this.findRoleService.execute(request);
+  }
+
+  @Put(':id')
+  async update(@Param() params: FindRoleDto, @Body() payload: EditRolePayload) {
+    return this.editRoleService.execute({ params, payload });
   }
 }

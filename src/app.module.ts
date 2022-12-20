@@ -3,6 +3,7 @@ import { ConfigModule } from '@nestjs/config';
 import { DatabaseModule } from './database/database.module';
 import { RoleModule } from './roles/role.module';
 import { UserModule } from './users/user.module';
+import { PermissionModule } from './permissions/permission.module';
 @Module({
   imports: [
     ConfigModule.forRoot({
@@ -12,6 +13,7 @@ import { UserModule } from './users/user.module';
     DatabaseModule,
     RoleModule,
     UserModule,
+    PermissionModule,
   ],
   controllers: [],
   providers: [],
