@@ -9,11 +9,11 @@ export class PasswordUserValue {
   constructor(private value: string) {}
 
   async generate(): Promise<string> {
-    return bcrypt.hash(this.value, PasswordUserValue.saltOrRounds);
+    return bcrypt.hashSync(this.value, PasswordUserValue.saltOrRounds);
   }
 
   async compare(hash: string): Promise<boolean> {
-    return bcrypt.compare(this.value, hash);
+    return bcrypt.compareSync(this.value, hash);
   }
 
   getValue(): string {

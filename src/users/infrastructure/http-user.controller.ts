@@ -12,10 +12,7 @@ import { PaginateUserService } from '../application/paginate-user.service';
 import { FindUserService } from '../application/find-user.service';
 import { CreateUserDto } from './dtos/create-user.dto';
 import { FindUserDto } from './dtos/find-user-dto';
-import {
-  EditUserPayload,
-  EditUserService,
-} from '../application/edit-user.service';
+import { EditUserService } from '../application/edit-user.service';
 import { ApiTags } from '@nestjs/swagger';
 import { JwtAuthGuard } from 'src/auth/infrastruture/guards/jwt-auth.guard';
 import { CaslGuard } from 'src/permissions/infrastructure/guards/casl.guard';
@@ -24,6 +21,9 @@ import {
   PermissionEntityEnum,
   PermissionModeEnum,
 } from 'src/permissions/domain/permission.enum';
+import { EditUserDto } from './dtos/edit-user.dto';
+import { CreateDefaultUserService } from '../application/create-default-user.service';
+import { CreateDefaultUserDto } from './dtos/create-default-user.dto';
 
 @ApiTags('Users')
 @Controller('users')
@@ -33,6 +33,7 @@ export class HttpUserController {
     private createUserService: CreateUserService,
     private findUserService: FindUserService,
     private editUserService: EditUserService,
+    private createDefaultService: CreateDefaultUserService,
   ) {}
 
   @Get()
@@ -71,7 +72,12 @@ export class HttpUserController {
     entity: PermissionEntityEnum.UserEntity,
     action: PermissionModeEnum.UPDATE,
   })
-  async update(@Param() params: FindUserDto, @Body() payload: EditUserPayload) {
+  async update(@Param() params: FindUserDto, @Body() payload: EditUserDto) {
     return this.editUserService.execute({ params, payload });
+  }
+
+  @Post('default/install')
+  async default(@Body() payload: CreateDefaultUserDto) {
+    return this.createDefaultService.execute(payload);
   }
 }

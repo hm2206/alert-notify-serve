@@ -14,6 +14,7 @@ import { PermissionModule } from 'src/permissions/permission.module';
     PaginateRoleService,
     EditRoleService,
   ],
+  exports: [CreateRoleService],
   controllers: [HttpRoleController],
 })
 export class RoleModule {}
