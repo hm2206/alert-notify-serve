@@ -1,4 +1,4 @@
-import { ApiProperty } from '@nestjs/swagger';
+import { ApiProperty, ApiPropertyOptional } from '@nestjs/swagger';
 import {
   IsDefined,
   IsString,
@@ -6,6 +6,7 @@ import {
   MinLength,
   IsUUID,
   IsEmail,
+  IsOptional,
 } from 'class-validator';
 import { EditUserPayload } from 'src/users/application/edit-user.service';
 import { PasswordUserValue } from 'src/users/domain/value-objects/password-user.value';
@@ -20,12 +21,12 @@ export class EditUserDto implements EditUserPayload {
   @IsEmail()
   email: string;
 
-  @ApiProperty()
-  @IsDefined()
+  @ApiPropertyOptional()
+  @IsOptional()
   @IsString()
   @MinLength(PasswordUserValue.min)
   @MaxLength(PasswordUserValue.max)
-  password: string;
+  password?: string;
 
   @ApiProperty()
   @IsDefined()

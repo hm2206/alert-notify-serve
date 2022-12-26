@@ -29,7 +29,7 @@ export class UserOrm extends Model implements UserInterface {
 
   @AllowNull(false)
   @ForeignKey(() => RoleOrm)
-  @Column({ type: DataType.UUID })
+  @Column({ type: DataType.UUID, onDelete: 'restrict' })
   roleId: string;
 
   @BelongsTo(() => RoleOrm)

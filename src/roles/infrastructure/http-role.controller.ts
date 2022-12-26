@@ -1,6 +1,7 @@
 import {
   Body,
   Controller,
+  Delete,
   Get,
   Param,
   Post,
@@ -22,6 +23,7 @@ import {
   PermissionEntityEnum,
   PermissionModeEnum,
 } from 'src/permissions/domain/permission.enum';
+import { DeleteRoleService } from '../application/delete-role.service';
 
 @ApiTags('Rol')
 @Controller('roles')
@@ -31,6 +33,7 @@ export class HttpRoleController {
     private createRoleService: CreateRoleService,
     private findRoleService: FindRoleService,
     private editRoleService: EditRoleService,
+    private deleteRoleService: DeleteRoleService,
   ) {}
 
   @Get()
@@ -71,5 +74,15 @@ export class HttpRoleController {
   })
   async update(@Param() params: FindRoleDto, @Body() payload: EditRoleDto) {
     return this.editRoleService.execute({ params, payload });
+  }
+
+  @Delete(':id')
+  @UseGuards(JwtAuthGuard, CaslGuard)
+  @CaslAction({
+    entity: PermissionEntityEnum.RoleEntity,
+    action: PermissionModeEnum.DELETE,
+  })
+  async delete(@Param() params: FindRoleDto) {
+    return this.deleteRoleService.execute(params);
   }
 }

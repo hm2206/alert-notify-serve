@@ -5,6 +5,7 @@ import { FindRoleService } from './application/find-role.service';
 import { PaginateRoleService } from './application/paginate-role.service';
 import { EditRoleService } from './application/edit-role.service';
 import { PermissionModule } from 'src/permissions/permission.module';
+import { DeleteRoleService } from './application/delete-role.service';
 
 @Module({
   imports: [PermissionModule],
@@ -13,6 +14,7 @@ import { PermissionModule } from 'src/permissions/permission.module';
     FindRoleService,
     PaginateRoleService,
     EditRoleService,
+    DeleteRoleService,
   ],
   exports: [CreateRoleService],
   controllers: [HttpRoleController],

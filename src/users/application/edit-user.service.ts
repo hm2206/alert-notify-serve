@@ -8,7 +8,7 @@ export class EditUserService {
   async execute({ params, payload }: EditUserRequest) {
     const data = await UserOrm.findOne({ where: { ...params } });
     // validar contraseña
-    if (payload.password != data.password) {
+    if (payload.password && payload.password != data.password) {
       const password = new PasswordUserValue(payload.password);
       payload.password = await password.generate();
     }
@@ -21,7 +21,7 @@ export class EditUserService {
 export interface EditUserPayload {
   username: string;
   email: string;
-  password: string;
+  password?: string;
   roleId: string;
 }
 
