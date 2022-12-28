@@ -7,6 +7,7 @@ import { HttpClientController } from './infrastructure/http-client.controller';
 import { DatabaseModule } from 'src/database/database.module';
 import { VisitModule } from 'src/visits/visit.module';
 import { PermissionModule } from 'src/permissions/permission.module';
+import { DeleteClientService } from './application/delete-client.service';
 
 @Module({
   imports: [DatabaseModule, VisitModule, PermissionModule],
@@ -15,6 +16,7 @@ import { PermissionModule } from 'src/permissions/permission.module';
     CreateClientService,
     FindClientService,
     EditClientService,
+    DeleteClientService,
   ],
   controllers: [HttpClientController],
 })

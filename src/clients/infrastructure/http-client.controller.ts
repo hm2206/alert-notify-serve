@@ -1,6 +1,7 @@
 import {
   Body,
   Controller,
+  Delete,
   Get,
   Inject,
   Param,
@@ -25,6 +26,7 @@ import {
   PermissionEntityEnum,
   PermissionModeEnum,
 } from 'src/permissions/domain/permission.enum';
+import { DeleteClientService } from '../application/delete-client.service';
 
 @ApiTags('Clients')
 @Controller('clients')
@@ -34,6 +36,7 @@ export class HttpClientController {
     private createClientService: CreateClientService,
     private findClientService: FindClientService,
     private editClientService: EditClientService,
+    private deleteClientService: DeleteClientService,
     @Inject(SEQUELIZE_SERVICE)
     private connection: Sequelize,
   ) {}
@@ -87,5 +90,15 @@ export class HttpClientController {
   })
   async update(@Param() params: FindClientDto, @Body() payload: EditClientDto) {
     return this.editClientService.execute({ params, payload });
+  }
+
+  @Delete(':id')
+  @UseGuards(JwtAuthGuard, CaslGuard)
+  @CaslAction({
+    entity: PermissionEntityEnum.ClientEntity,
+    action: PermissionModeEnum.DELETE,
+  })
+  async delete(@Param() params: FindClientDto) {
+    return this.deleteClientService.execute(params);
   }
 }
