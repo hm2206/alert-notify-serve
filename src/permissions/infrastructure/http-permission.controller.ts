@@ -1,10 +1,12 @@
 import {
   Body,
   Controller,
+  Delete,
   Get,
   Param,
   Post,
   Put,
+  Query,
   UseGuards,
 } from '@nestjs/common';
 import { PaginatePermissionService } from '../application/paginate-permission.service';
@@ -22,6 +24,8 @@ import {
   PermissionEntityEnum,
   PermissionModeEnum,
 } from '../domain/permission.enum';
+import { PaginatePermissionDto } from './dtos/paginate-permission.dto';
+import { DeletePermissionService } from '../application/delete-permission.service';
 
 @ApiTags('Permissions')
 @Controller('permissions')
@@ -31,6 +35,7 @@ export class HttpPermissionController {
     private createPermissionService: CreatePermissionService,
     private findPermissionService: FindPermissionService,
     private editPermissionService: EditPermissionService,
+    private deletePermissionService: DeletePermissionService,
   ) {}
 
   @Get()
@@ -39,8 +44,8 @@ export class HttpPermissionController {
     entity: PermissionEntityEnum.PermissionEntity,
     action: PermissionModeEnum.READ,
   })
-  async index() {
-    return this.paginatePermissionService.execute();
+  async index(@Query() request: PaginatePermissionDto) {
+    return this.paginatePermissionService.execute(request);
   }
 
   @Post()
@@ -74,5 +79,15 @@ export class HttpPermissionController {
     @Body() payload: EditPermissionDto,
   ) {
     return this.editPermissionService.execute({ params, payload });
+  }
+
+  @Delete(':id')
+  @UseGuards(JwtAuthGuard, CaslGuard)
+  @CaslAction({
+    entity: PermissionEntityEnum.PermissionEntity,
+    action: PermissionModeEnum.DELETE,
+  })
+  async delete(@Param() params: FindPermissionDto) {
+    return this.deletePermissionService.execute(params);
   }
 }

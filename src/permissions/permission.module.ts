@@ -5,6 +5,7 @@ import { CreatePermissionService } from './application/create-permission.service
 import { EditPermissionService } from './application/edit-permission.service';
 import { HttpPermissionController } from './infrastructure/http-permission.controller';
 import { CaslPermissionService } from './application/casl-permission.service';
+import { DeletePermissionService } from './application/delete-permission.service';
 
 @Module({
   providers: [
@@ -13,6 +14,7 @@ import { CaslPermissionService } from './application/casl-permission.service';
     CreatePermissionService,
     EditPermissionService,
     CaslPermissionService,
+    DeletePermissionService,
   ],
   exports: [
     PaginatePermissionService,
@@ -20,6 +22,7 @@ import { CaslPermissionService } from './application/casl-permission.service';
     CreatePermissionService,
     EditPermissionService,
     CaslPermissionService,
+    DeletePermissionService,
   ],
   controllers: [HttpPermissionController],
 })
