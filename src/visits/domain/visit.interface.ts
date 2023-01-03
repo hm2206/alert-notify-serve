@@ -4,4 +4,6 @@ export interface VisitInterface {
   id: string;
   date: Date;
   client: ClientInterface;
+  clientId: string;
+  isSend: boolean;
 }

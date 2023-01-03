@@ -28,6 +28,9 @@ export class VisitOrm
   @Column({ type: DataType.UUID })
   clientId: string;
 
+  @Column({ type: DataType.BOOLEAN })
+  isSend: boolean;
+
   @BelongsTo(() => ClientOrm)
   client: ClientOrm;
 }

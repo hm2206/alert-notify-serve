@@ -7,12 +7,15 @@ import { PermissionModule } from './permissions/permission.module';
 import { ClientModule } from './clients/client.module';
 import { VisitModule } from './visits/visit.module';
 import { AuthModule } from './auth/auth.module';
+import { EventEmitterModule } from '@nestjs/event-emitter';
+
 @Module({
   imports: [
     ConfigModule.forRoot({
       envFilePath: ['.env'],
       isGlobal: true,
     }),
+    EventEmitterModule.forRoot(),
     DatabaseModule,
     RoleModule,
     UserModule,
