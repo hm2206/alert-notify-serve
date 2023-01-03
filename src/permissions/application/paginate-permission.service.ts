@@ -24,7 +24,7 @@ export class PaginatePermissionService {
     }
 
     if (request.roleIds?.length) {
-      filters.roleIn = {
+      filters.roleId = {
         [Op.in]: request.roleIds,
       };
     }
