@@ -8,6 +8,7 @@ import { ClientModule } from './clients/client.module';
 import { VisitModule } from './visits/visit.module';
 import { AuthModule } from './auth/auth.module';
 import { EventEmitterModule } from '@nestjs/event-emitter';
+import { ScheduleModule } from '@nestjs/schedule';
 
 @Module({
   imports: [
@@ -15,6 +16,7 @@ import { EventEmitterModule } from '@nestjs/event-emitter';
       envFilePath: ['.env'],
       isGlobal: true,
     }),
+    ScheduleModule.forRoot(),
     EventEmitterModule.forRoot(),
     DatabaseModule,
     RoleModule,
@@ -24,7 +26,5 @@ import { EventEmitterModule } from '@nestjs/event-emitter';
     VisitModule,
     AuthModule,
   ],
-  controllers: [],
-  providers: [],
 })
 export class AppModule {}

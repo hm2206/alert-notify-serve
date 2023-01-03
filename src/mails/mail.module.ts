@@ -21,7 +21,7 @@ import { resolve } from 'path';
       },
       preview: true,
       template: {
-        dir: resolve(__dirname, '../../src/mails/templates/'),
+        dir: resolve(__dirname, './templates/'),
         adapter: new HandlebarsAdapter(),
         options: {
           strict: true,

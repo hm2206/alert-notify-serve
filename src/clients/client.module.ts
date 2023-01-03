@@ -8,15 +8,18 @@ import { DatabaseModule } from 'src/database/database.module';
 import { VisitModule } from 'src/visits/visit.module';
 import { PermissionModule } from 'src/permissions/permission.module';
 import { DeleteClientService } from './application/delete-client.service';
+import { MailModule } from 'src/mails/mail.module';
+import { DailyClientTask } from './application/tasks/daily-client.task';
 
 @Module({
-  imports: [DatabaseModule, VisitModule, PermissionModule],
+  imports: [DatabaseModule, VisitModule, PermissionModule, MailModule],
   providers: [
     PaginateClientService,
     CreateClientService,
     FindClientService,
     EditClientService,
     DeleteClientService,
+    DailyClientTask,
   ],
   controllers: [HttpClientController],
 })

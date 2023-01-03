@@ -39,7 +39,7 @@ export class ClientOrm
   email: string;
 
   @AllowNull(false)
-  @Column({ type: DataType.DATE })
+  @Column({ type: DataType.DATEONLY })
   dateOfBirth: Date;
 
   @Column({ type: DataType.STRING(20) })
