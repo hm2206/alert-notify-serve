@@ -1,6 +1,7 @@
 import {
   Body,
   Controller,
+  Delete,
   Get,
   Param,
   Post,
@@ -24,6 +25,7 @@ import {
 import { EditUserDto } from './dtos/edit-user.dto';
 import { CreateDefaultUserService } from '../application/create-default-user.service';
 import { CreateDefaultUserDto } from './dtos/create-default-user.dto';
+import { DeleteUserService } from '../application/delete-user.service';
 
 @ApiTags('Users')
 @Controller('users')
@@ -33,6 +35,7 @@ export class HttpUserController {
     private createUserService: CreateUserService,
     private findUserService: FindUserService,
     private editUserService: EditUserService,
+    private deleteUserService: DeleteUserService,
     private createDefaultService: CreateDefaultUserService,
   ) {}
 
@@ -74,6 +77,16 @@ export class HttpUserController {
   })
   async update(@Param() params: FindUserDto, @Body() payload: EditUserDto) {
     return this.editUserService.execute({ params, payload });
+  }
+
+  @Delete(':id')
+  @UseGuards(JwtAuthGuard, CaslGuard)
+  @CaslAction({
+    entity: PermissionEntityEnum.UserEntity,
+    action: PermissionModeEnum.DELETE,
+  })
+  async delete(@Param() params: FindUserDto) {
+    return this.deleteUserService.execute(params);
   }
 
   @Post('default/install')

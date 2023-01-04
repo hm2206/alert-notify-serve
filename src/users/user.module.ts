@@ -8,6 +8,7 @@ import { PermissionModule } from 'src/permissions/permission.module';
 import { CreateDefaultUserService } from './application/create-default-user.service';
 import { RoleModule } from 'src/roles/role.module';
 import { DatabaseModule } from 'src/database/database.module';
+import { DeleteUserService } from './application/delete-user.service';
 
 @Module({
   imports: [DatabaseModule, PermissionModule, RoleModule],
@@ -17,6 +18,7 @@ import { DatabaseModule } from 'src/database/database.module';
     PaginateUserService,
     EditUserService,
     CreateDefaultUserService,
+    DeleteUserService,
   ],
   controllers: [HttpUserController],
   exports: [
