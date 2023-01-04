@@ -2,9 +2,12 @@ import { MailerModule } from '@nestjs-modules/mailer';
 import { HandlebarsAdapter } from '@nestjs-modules/mailer/dist/adapters/handlebars.adapter';
 import { Module } from '@nestjs/common';
 import { resolve } from 'path';
+import { TwilioService } from './application/twilio.service';
+import { ConfigModule } from '@nestjs/config';
 
 @Module({
   imports: [
+    ConfigModule,
     MailerModule.forRoot({
       transport: {
         host: 'smtp.mailtrap.io',
@@ -29,5 +32,7 @@ import { resolve } from 'path';
       },
     }),
   ],
+  providers: [TwilioService],
+  exports: [TwilioService],
 })
 export class MailModule {}

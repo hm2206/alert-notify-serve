@@ -19,7 +19,7 @@ export class CreateVisitService {
       where: { clientId: request.client.id },
     });
     // validar is send
-    const isSend = (numVisit + 1) % 3 == 0;
+    const isSend = (numVisit + 1) % 3 === 0;
     // crear visitas
     const visit = await VisitOrm.create(
       {
