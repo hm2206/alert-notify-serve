@@ -47,4 +47,5 @@ export class ClientOrm
 
   @HasMany(() => VisitOrm, { onDelete: 'cascade' })
   visits: VisitInterface[] = [];
+  countVisits = 0;
 }

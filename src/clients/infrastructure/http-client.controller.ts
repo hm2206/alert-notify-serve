@@ -7,6 +7,7 @@ import {
   Param,
   Post,
   Put,
+  Query,
   UseGuards,
 } from '@nestjs/common';
 import { PaginateClientService } from '../application/paginate-client.service';
@@ -27,6 +28,7 @@ import {
   PermissionModeEnum,
 } from 'src/permissions/domain/permission.enum';
 import { DeleteClientService } from '../application/delete-client.service';
+import { PaginateClientDto } from './dtos/paginate-client.dto';
 
 @ApiTags('Clients')
 @Controller('clients')
@@ -47,8 +49,8 @@ export class HttpClientController {
     entity: PermissionEntityEnum.ClientEntity,
     action: PermissionModeEnum.READ,
   })
-  async index() {
-    return this.paginateClientService.execute();
+  async index(@Query() request: PaginateClientDto) {
+    return this.paginateClientService.execute(request);
   }
 
   @Post()
