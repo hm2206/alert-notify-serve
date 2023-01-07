@@ -4,10 +4,11 @@ import { Cron } from '@nestjs/schedule';
 import { DateTime } from 'luxon';
 import sequelize, { Op } from 'sequelize';
 import { ClientOrm } from 'src/database/domain/client.orm';
+import { TwilioService } from 'src/mails/application/twilio.service';
 
 @Injectable()
 export class DailyClientTask {
-  constructor(private mailer: MailerService) {}
+  constructor(private mailer: MailerService, private twilio: TwilioService) {}
 
   @Cron('0 5 * * *')
   async handle() {
@@ -26,16 +27,22 @@ export class DailyClientTask {
     });
     // enviar correos
     clients.forEach(async (client) => {
-      await this.mailer
-        .sendMail({
+      Promise.all([
+        this.mailer.sendMail({
           to: client.email,
-          subject: 'Vale de atencion gratuita de mantenimiento',
+          subject: 'Vale de atención gratuita de mantenimiento',
           template: './birthday',
           context: {
             name: client.name,
           },
-        })
-        .catch(() => null);
+        }),
+        this.twilio.sendWhatsapp({
+          to: client.phone,
+          body: `Hola {{name}},
+            Por ser el día de tu santo te regalamos un vale de
+            atencion gratuita de mantenimiento en "CARRANZA MOTORS"`,
+        }),
+      ]);
     });
   }
 }

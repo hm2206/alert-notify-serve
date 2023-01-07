@@ -3,8 +3,8 @@ import { VisitInterface } from '../domain/visit.interface';
 import { OnEvent } from '@nestjs/event-emitter';
 import { MailerService } from '@nestjs-modules/mailer';
 import { ClientInterface } from 'src/clients/domain/client.interface';
-import { TwilioService } from 'src/mails/application/twilio.service';
 import { isPhoneNumber } from 'class-validator';
+import { TwilioService } from 'src/mails/application/twilio.service';
 
 export const createdVisitEventName = 'visits.created';
 
@@ -17,20 +17,22 @@ export class CreatedVisitEvent {
     // validar envio
     if (!visit.isSend) return;
     // enviar email
-    Promise.all([this.sendMail(client), this.sendWhatsapp(client)]).catch(
+    await Promise.all([this.sendMail(client), this.sendWhatsapp(client)]).catch(
       () => null,
     );
   }
 
   private async sendMail(client: ClientInterface) {
-    await this.mailer.sendMail({
-      to: client.email,
-      subject: 'Descuento del 15%',
-      template: './descuento',
-      context: {
-        name: client.name,
-      },
-    });
+    await this.mailer
+      .sendMail({
+        to: client.email,
+        subject: 'Descuento del 15%',
+        template: './descuento',
+        context: {
+          name: client.name,
+        },
+      })
+      .catch((err) => console.log(err));
   }
 
   private async sendWhatsapp(client: ClientInterface) {
@@ -38,7 +40,7 @@ export class CreatedVisitEvent {
     if (!isPhoneValid) return;
     await this.twilio.sendWhatsapp({
       to: client.phone,
-      body: `Acabas de recibir el 15% de descuento en tu próxima visita!!!`,
+      body: `Acabas de recibir el 15% de descuento en tu próxima visita en "CARRANZA MOTORS"`,
     });
   }
 }

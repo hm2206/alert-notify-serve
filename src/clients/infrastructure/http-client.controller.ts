@@ -66,10 +66,10 @@ export class HttpClientController {
         request,
         transaction,
       );
-      transaction.commit();
+      await transaction.commit();
       return client;
     } catch (error) {
-      transaction.rollback();
+      await transaction.rollback();
       throw error;
     }
   }

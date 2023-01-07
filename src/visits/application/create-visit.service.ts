@@ -31,7 +31,7 @@ export class CreateVisitService {
       { transaction },
     );
     // emitir evento
-    await this.eventEmitter.emitAsync(createdVisitEventName, {
+    this.eventEmitter.emit(createdVisitEventName, {
       visit,
       client: request.client,
     } as CreatedVisitRequest);
