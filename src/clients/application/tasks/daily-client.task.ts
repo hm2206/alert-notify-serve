@@ -38,7 +38,7 @@ export class DailyClientTask {
         }),
         this.twilio.sendWhatsapp({
           to: client.phone,
-          body: `Hola {{name}},
+          body: `Hola ${client.name},
             Por ser el día de tu santo te regalamos un vale de
             atencion gratuita de mantenimiento en "CARRANZA MOTORS"`,
         }),

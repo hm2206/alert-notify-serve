@@ -40,7 +40,8 @@ export class CreatedVisitEvent {
     if (!isPhoneValid) return;
     await this.twilio.sendWhatsapp({
       to: client.phone,
-      body: `Acabas de recibir el 15% de descuento en tu próxima visita en "CARRANZA MOTORS"`,
+      //body: '¡Hola! Jean 👋. Te ofrecemos un descuento especial por tu visita a *Carranza-Motors*, para conocer más sobre esta promoción no dude en escribirnos.',
+      body:  `¡Hola! ${client.name} 👋. Te ofrecemos un descuento especial por tu visita a *Carranza-Motors*, para conocer más sobre esta promoción no dude en escribirnos. 👨‍🔧`
     });
   }
 }
